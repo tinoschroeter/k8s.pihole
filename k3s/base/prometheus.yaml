@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pihole-metrics-sm
+  labels:
+    k8s-app: pihole-exporter-service
+    prometheus: k8s
+
+spec:
+  jobLabel: pihole-exporter
+  selector:
+    matchLabels:
+      k8s-app: pihole-exporter-service
+  namespaceSelector:
+    any: true
+  endpoints:
+  - port: http-metrics
+    interval: 30s

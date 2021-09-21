@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: pi-hole
+  name: pihole-deployment
+  labels:
+    app: pihole
+spec:
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      dnsConfig:
+        nameservers:
+        - 127.0.0.1
+        - 8.8.8.8
+      containers:
+      - name: pihole-exporter
+        image: ekofr/pihole-exporter:v0.0.11
+        imagePullPolicy: Always
+        env:
+        - name: PIHOLE_HOSTNAME
+          value: 'localhost'
+        - name: PIHOLE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pihole-secret
+              key: password
+      - name: pihole
+        image: pihole/pihole:v5.8.1
+        imagePullPolicy: Always
+        env:
+        - name: VIRTUAL_HOST
+          value: pihole.tino.sh
+        - name: TZ
+          value: 'Europe/Berlin'
+        - name: WEBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pihole-secret
+              key: password
+        volumeMounts:
+        - name: pihole-data
+          mountPath: /etc/pihole
+        - name: pihole-dnsmasq
+          mountPath: /etc/dnsmasq.d
+      volumes:
+      - name: pihole-data
+        persistentVolumeClaim:
+          claimName: pihole-pvc-data
+      - name: pihole-dnsmasq
+        persistentVolumeClaim:
+          claimName: pihole-pvc-dnsmasq

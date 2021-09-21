@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: pihole-ingress
+  namespace: pi-hole
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+  - host: pihole.tino.sh
+    http:
+      paths:
+      - backend:
+          serviceName: pihole-frontend-service
+          servicePort: 8080
+  tls:
+  - hosts:
+    - pihole.tino.sh
+    secretName: pihole-tino-sh-tls

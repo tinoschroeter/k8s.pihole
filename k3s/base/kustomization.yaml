@@ -1,0 +1,7 @@
+---
+namespace: pi-hole
+resources:
+  - pvc.yaml
+  - services.yaml
+  - prometheus.yaml
+  - deployment.yaml
