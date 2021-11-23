@@ -8,7 +8,7 @@ if [ ! -z "$1" ]; then
     name: pihole-secret
   type: Opaque
   data:
-    API: $(echo -n $1 | base64 -w0)
+    password: $(echo -n $1 | base64 -w0)
 EOF
 
 else 

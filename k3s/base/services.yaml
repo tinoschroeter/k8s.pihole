@@ -12,7 +12,7 @@ spec:
       name: dns-udp
       port: 53
   externalIPs:
-    - 10.0.1.242
+    - 10.0.1.100
 ---
 apiVersion: v1
 kind: Service
