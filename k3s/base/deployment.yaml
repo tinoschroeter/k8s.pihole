@@ -33,6 +33,13 @@ spec:
       - name: pihole
         image: pihole/pihole:2022.01.1
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "30m"
+          limits:
+            memory: "128Mi"
+            cpu: "220m"
         env:
         - name: VIRTUAL_HOST
           value: pihole.tino.sh
