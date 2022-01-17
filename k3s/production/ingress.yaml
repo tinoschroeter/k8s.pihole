@@ -5,6 +5,9 @@ metadata:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+
   name: pihole-ingress
   namespace: pi-hole
 spec:
@@ -19,6 +22,33 @@ spec:
             name: pihole-frontend-service
             port: 
               number: 8080
+  tls:
+  - hosts:
+    - pihole.tino.sh
+    secretName: pihole-tino-sh-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+  name: oauth2-proxy-pihole
+  namespace: pi-hole
+spec:
+  rules:
+  - host: pihole.tino.sh
+    http:
+      paths:
+      - pathType: Prefix
+        path: /oauth2
+        backend:
+          service:
+            name: oauth2-proxy-pihole
+            port: 
+              number: 4180
   tls:
   - hosts:
     - pihole.tino.sh

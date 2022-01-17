@@ -2,6 +2,7 @@
 namespace: pi-hole
 resources:
   - pvc.yaml
+  - oauth2-service-pihole.yaml
   - services.yaml
   - prometheus.yaml
   - deployment.yaml
