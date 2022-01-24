@@ -5,7 +5,8 @@
 [![GitHub Super-Linter](https://github.com/tinoschroeter/k8s.pihole/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/tinoschroeter/k8s.pihole/actions/workflows/linter.yml)
 
 ```
-Pi-hole has the ability to block traditional website advertisements as well as advertisements in unconventional places, 
+Pi-hole has the ability to block traditional website advertisements 
+as well as advertisements in unconventional places, 
 such as smart TVs and mobile operating system advertisements.
 ```
 
