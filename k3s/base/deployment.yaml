@@ -20,7 +20,7 @@ spec:
         - 1.1.1.1
       containers:
       - name: pihole-exporter
-        image: ekofr/pihole-exporter:v0.1.1
+        image: ekofr/pihole-exporter:v0.3.0
         imagePullPolicy: Always
         env:
         - name: PIHOLE_HOSTNAME
@@ -31,7 +31,7 @@ spec:
               name: pihole-secret
               key: password
       - name: pihole
-        image: pihole/pihole:2022.02
+        image: pihole/pihole:2022.07
         imagePullPolicy: Always
         resources:
           requests:
